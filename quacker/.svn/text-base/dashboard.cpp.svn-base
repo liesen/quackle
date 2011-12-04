@@ -1,0 +1,136 @@
+/*
+ * Copyright (c) 2005-2006 Jason Katz-Brown and John O'Laughlin.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. The names of the authors may not be used to endorse or promote
+ *    products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHORS ``AS IS'' AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#include <QtGui>
+
+#include <game.h>
+
+#include "dashboard.h"
+#include "util.h"
+
+PlayerBrief::PlayerBrief()
+	: m_isCurrent(false), m_winnerStatus(Nonwinner)
+{
+	m_vlayout = new QVBoxLayout(this);
+
+	m_name = new QLabel;
+	m_score = new QLabel;
+
+	m_name->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+	m_score->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+
+	m_vlayout->addWidget(m_name);
+	m_vlayout->addWidget(m_score);
+}
+
+void PlayerBrief::setPlayer(const Quackle::Player &player)
+{
+	QString nameText = (m_isCurrent? "<b>%1</b>" : "%1");
+	nameText = nameText.arg(Util::stringToQString(player.name()));
+
+	if (m_winnerStatus == Winner || m_winnerStatus == Cowinner)
+		nameText += QString("<br /><h3>%1</h3>").arg(m_winnerStatus == Winner? tr("Winner!") : tr("Cowinner"));
+
+	m_name->setText(nameText);
+	m_score->setText(QString("<h2>%1</h2>").arg(player.score()));
+
+	if (m_isCurrent)
+	{
+		setFrameStyle(QFrame::Panel | QFrame::Sunken);
+		setLineWidth(2);
+	}
+	else
+	{
+		setFrameStyle(QFrame::NoFrame);
+	}
+
+}
+
+////////////
+
+Dashboard::Dashboard(QWidget *parent)
+	: HistoryView(parent)
+{
+	m_hlayout = new QHBoxLayout(this);
+	m_hlayout->setMargin(0);
+}
+
+Dashboard::~Dashboard()
+{
+}
+
+void Dashboard::historyChanged(const Quackle::History &history)
+{
+	const Quackle::PlayerList players(history.currentPosition().endgameAdjustedScores());
+	const int numberOfPlayers = players.size();
+	const bool gameOver = history.currentPosition().gameOver();
+
+	while (m_briefs.size() > numberOfPlayers)
+	{
+		delete m_briefs.back();
+		m_briefs.pop_back();
+	}
+
+	while (m_briefs.size() < numberOfPlayers)
+	{
+		m_briefs.push_back(new PlayerBrief);
+		m_hlayout->addWidget(m_briefs.back());
+		m_briefs.back()->show();
+	}
+
+	Quackle::PlayerList winners;
+	if (gameOver)
+		winners = history.currentPosition().leadingPlayers();
+
+	int playerCountFromZero = 0;
+	QList<PlayerBrief *>::iterator briefIt = m_briefs.begin();
+	for (Quackle::PlayerList::const_iterator playerIt = players.begin(); playerIt != players.end(); ++playerIt, ++briefIt, ++playerCountFromZero)
+	{
+		const bool isCurrentPlayer = !gameOver && *playerIt == history.currentPosition().currentPlayer();
+
+		(*briefIt)->setCurrentPlayer(isCurrentPlayer);
+		(*briefIt)->setWinnerStatus(Nonwinner);
+
+		if (gameOver)
+		{
+			Quackle::PlayerList::const_iterator winnersIt;
+			for (winnersIt = winners.begin(); winnersIt != winners.end(); ++winnersIt)
+			{
+				if (*playerIt == *winnersIt)
+				{
+					(*briefIt)->setWinnerStatus(winners.size() > 1? Cowinner : Winner);
+					break;
+				}
+			}
+		}
+
+		(*briefIt)->setPlayer(*playerIt);
+	}
+}
+

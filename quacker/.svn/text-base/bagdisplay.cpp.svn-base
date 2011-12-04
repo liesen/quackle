@@ -1,0 +1,116 @@
+/*
+ * Copyright (c) 2005-2006 Jason Katz-Brown and John O'Laughlin.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. The names of the authors may not be used to endorse or promote
+ *    products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHORS ``AS IS'' AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#include <QtGui>
+
+#include <bag.h>
+#include <game.h>
+
+#include "quacker.h"
+#include "bagdisplay.h"
+#include "util.h"
+
+BagDisplay::BagDisplay(QWidget *parent)
+	: View(parent)
+{
+	QVBoxLayout *layout = new QVBoxLayout(this);
+	layout->setMargin(0);
+
+	m_textEdit = new QTextEdit;
+	m_textEdit->setReadOnly(true);
+	m_textEdit->setFontFamily("Courier");
+	m_textEdit->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+
+	m_label = new QLabel;
+	m_label->setWordWrap(true);
+	m_label->setBuddy(m_textEdit);
+	layout->addWidget(m_label);
+	layout->addWidget(m_textEdit);
+
+	layout->setStretchFactor(m_textEdit, 10);
+
+	showTiles(QString::null);
+}
+
+BagDisplay::~BagDisplay()
+{
+}
+
+void BagDisplay::positionChanged(const Quackle::GamePosition &position)
+{
+	showTiles(Util::stringToQString(position.unseenTiles()));
+}
+
+void BagDisplay::showTiles(const QString &tiles)
+{
+	if (tiles.isNull())
+	{
+		m_label->setText(tr("&Bag is collapsed in a wrinkled heap on the table"));
+		return;
+	}
+
+	QMap<QChar, int> counts;
+	QString text;
+
+	for (int i = 0; i < tiles.length(); ++i)
+	{
+		const QChar &c = tiles.at(i);
+		if (counts.contains(c))
+			counts[c] += 1;
+		else
+			counts.insert(c, 1);
+	}
+
+	QFontMetrics metrics(m_textEdit->currentFont());
+	int maxLineWidth = 0;
+
+	for (QMap<QChar, int>::iterator it = counts.begin(); it != counts.end(); ++it)
+	{
+		const int count = it.value();
+
+		QString line;
+
+		for (int i = 0; i < count; ++i)
+			line += it.key();
+
+		const int lineWidth = metrics.width(line);
+		if (lineWidth > maxLineWidth)
+			maxLineWidth = lineWidth;
+
+		text += line;
+		text += "\n";
+	}
+
+	m_label->setText(tr("%1 &unseen tiles").arg(tiles.length()));
+	m_textEdit->setPlainText(text);
+
+	const int maximumWidth = maxLineWidth + m_textEdit->frameWidth() * 2 + m_textEdit->verticalScrollBar()->width() + 10;
+	m_textEdit->setMaximumSize(maximumWidth, 26 * 100);
+}
+

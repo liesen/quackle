@@ -1,0 +1,46 @@
+TODO
+- make QuackerSettings singleton, not TopLevel!
+- configurable board parameters
+- clock information stored in GamePosition, clock below history
+- possibly commit button below clock, and kibitz automatically as soon as choices tab is selected?
+- post-mortems
+
+- commit with something new on board -> confirm
+- unconnected plays
+
+- button to shuffle rack
+- volatility analysis for strong player
+- menu item to have computer play current player's position
+
+LEAVE HEURISTICS
+
+In Landau we precalculated BaSiC leaves for 1-6 tiles, but that was
+simply in the interest of speed.  That is, they were based only on 1
+tile values and v/c.  BobBot actually had simmed leave values for
+almost all of the leaves, and I think that's what we should do too.  I
+generated 1-4 tile leave values (except for 4 tile leaves with a
+blank) with Landau, but I think I know how to do them better than I
+did before, and of course it would be nice to do them with TWL06.  So
+we should
+
+1. Write code to load precalcuated leave values for 1-6 tile leaves
+into a hash table.
+2. Make a list of leave values using my Landau stuff for 1-4 tiles.
+For leaves we haven't simmed yet, use 1 tile values + synergies +
+Maven v/c (from the CanAm book).
+3. Generate TWL06 leave values with Quackle.  Using all the computers
+we have available to us, we should be able to get a lot done in a
+month.  I'll leave stuff running on both my PCs while I'm in London,
+and also on my Mac whenever I can.  First priority is to get all 1 to
+4 tile leaves.  Five and six tile leaves will take longer, so we can
+prioritize these by running a millionish games and ranking the leaves
+by how often they are in the kibitzer's top ten.  The sims will run
+faster if we use a GADDAG, so of course we should get that working
+first.
+
+LEAVE HASHING
+Our neat trick for hashing Leave values without sorting was to assign
+each letter a prime number, like  E = 2, A = 3, I = 5 ... X = 101, X =
+103 (or whatever).  Multiply the letters together into a 64 bit int
+and you've got your hash key.  Way faster than alphagramming.
+

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="125"
+   name=""
+   committed-date="2006-01-16T02:50:34.981871Z"
+   url="svn+ssh://brumby.dyndns.org/home/jasonkb/quacklesvn/quackle/trunk/quacker"
+   last-author="jasonkb"
+   kind="dir"
+   uuid="07084de4-2103-0410-aafc-9e5073cc8524"
+   revision="125"/>
+<entry
+   committed-rev="112"
+   name="rackdisplay.cpp"
+   text-time="2006-01-16T02:58:22.000000Z"
+   committed-date="2006-01-09T09:17:12.759149Z"
+   checksum="634306442343d74d399636db6950b47b"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:17.000000Z"/>
+<entry
+   committed-rev="110"
+   name="history.h"
+   text-time="2006-01-16T02:58:22.000000Z"
+   committed-date="2006-01-08T02:09:12.149209Z"
+   checksum="c6fe1e062b6afb79bdaf1bf941b8e857"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:17.000000Z"/>
+<entry
+   committed-rev="119"
+   name="graphicalboard.h"
+   text-time="2006-01-16T02:58:22.000000Z"
+   committed-date="2006-01-09T22:06:51.987889Z"
+   checksum="47ec68d9670b311552eb0c71470099ab"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:17.000000Z"/>
+<entry
+   committed-rev="117"
+   name="quacker.pro"
+   text-time="2006-01-16T02:58:22.000000Z"
+   committed-date="2006-01-09T12:04:46.363906Z"
+   checksum="22b0d5ab158b2acc207e9d3ad7513b62"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:17.000000Z"/>
+<entry
+   committed-rev="89"
+   name="view.cpp"
+   text-time="2006-01-16T02:58:22.000000Z"
+   committed-date="2005-12-30T12:28:02.101166Z"
+   checksum="324d9a758ddeb4aefe7e924fa6842d2c"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:17.000000Z"/>
+<entry
+   committed-rev="112"
+   name="brb.h"
+   text-time="2006-01-16T02:58:22.000000Z"
+   committed-date="2006-01-09T09:17:12.759149Z"
+   checksum="97bc21aee820310f511e7e35b31fde66"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:18.000000Z"/>
+<entry
+   committed-rev="112"
+   name="widgetfactory.cpp"
+   text-time="2006-01-16T02:58:22.000000Z"
+   committed-date="2006-01-09T09:17:12.759149Z"
+   checksum="9972b411ddf9ba5f6b75b84041d0d7bb"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:18.000000Z"/>
+<entry
+   committed-rev="108"
+   name="boarddisplay.cpp"
+   text-time="2006-01-16T02:58:22.000000Z"
+   committed-date="2006-01-07T02:32:37.389928Z"
+   checksum="699c6829afe916f478d6e6d0e197544a"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:18.000000Z"/>
+<entry
+   committed-rev="105"
+   name="simviewer.h"
+   text-time="2006-01-16T02:58:22.000000Z"
+   committed-date="2006-01-06T07:00:05.524490Z"
+   checksum="c980bbb1c577885d7160790f78320b69"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:18.000000Z"/>
+<entry
+   committed-rev="102"
+   name="movebox.cpp"
+   text-time="2006-01-16T02:58:22.000000Z"
+   committed-date="2006-01-05T12:50:44.242707Z"
+   checksum="40df34b187c6709bb3cb59299deed683"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:19.000000Z"/>
+<entry
+   committed-rev="108"
+   name="util.h"
+   text-time="2006-01-16T02:58:22.000000Z"
+   committed-date="2006-01-07T02:32:37.389928Z"
+   checksum="32d8ac74de01ef4c54ec084153cfee8f"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:19.000000Z"/>
+<entry
+   committed-rev="89"
+   name="bagdisplay.h"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2005-12-30T12:28:02.101166Z"
+   checksum="e5d1128f886cc353faf4a4210f8eeaf6"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:19.000000Z"/>
+<entry
+   committed-rev="89"
+   name="main.cpp"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2005-12-30T12:28:02.101166Z"
+   checksum="89c153a500b65ab3496cf20028788967"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:19.000000Z"/>
+<entry
+   committed-rev="119"
+   name="dashboard.cpp"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-09T22:06:51.987889Z"
+   checksum="33b223c7031d5970301a3586a220cb45"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:19.000000Z"/>
+<entry
+   committed-rev="102"
+   name="newgame.h"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-05T12:50:44.242707Z"
+   checksum="1eefc84f44ba38d31f6e8960733de9de"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:19.000000Z"/>
+<entry
+   committed-rev="121"
+   name="quacker.h"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-10T01:21:37.754830Z"
+   checksum="8a7000e8e87e18098033717ef60e4573"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:19.000000Z"/>
+<entry
+   committed-rev="117"
+   name="history.cpp"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-09T12:04:46.363906Z"
+   checksum="c1edcb2442c9afa3c2d7c6fbbe8f4e01"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:19.000000Z"/>
+<entry
+   committed-rev="83"
+   name="LICENSE"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2005-12-30T03:43:00.403896Z"
+   checksum="90816cef17077058d0a586fbfbea7c90"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:19.000000Z"/>
+<entry
+   committed-rev="112"
+   name="graphicalboard.cpp"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-09T09:17:12.759149Z"
+   checksum="a9b8c8007f5401da300d3565fea938bf"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:21.000000Z"/>
+<entry
+   committed-rev="112"
+   name="brb.cpp"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-09T09:17:12.759149Z"
+   checksum="b024fe075dab8d3e411102657c8e4c28"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:21.000000Z"/>
+<entry
+   committed-rev="109"
+   name="simviewer.cpp"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-07T11:32:11.671431Z"
+   checksum="36c1dace3baf8db8a03e7f52b2746846"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:21.000000Z"/>
+<entry
+   committed-rev="112"
+   name="rackdisplay.h"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-09T09:17:12.759149Z"
+   checksum="53f614cd244def3362b0da2c0a7a4735"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:21.000000Z"/>
+<entry
+   committed-rev="103"
+   name="boardsetup.h"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-05T23:10:16.444541Z"
+   checksum="dae3e35c8e01f6aeacabd96d67822a5d"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:21.000000Z"/>
+<entry
+   committed-rev="117"
+   name="util.cpp"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-09T12:04:46.363906Z"
+   checksum="29e285a42dbcdb738dbaf0bac81e258e"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:21.000000Z"/>
+<entry
+   committed-rev="89"
+   name="bagdisplay.cpp"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2005-12-30T12:28:02.101166Z"
+   checksum="6f220335ada489db7db1bb5f6e5c0466"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:21.000000Z"/>
+<entry
+   committed-rev="89"
+   name="view.h"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2005-12-30T12:28:02.101166Z"
+   checksum="dca7e5185d45c6f443a9da0e94493d91"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:21.000000Z"/>
+<entry
+   committed-rev="112"
+   name="widgetfactory.h"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-09T09:17:12.759149Z"
+   checksum="5839bd6b7371018e0fbb02415b5d1e73"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:22.000000Z"/>
+<entry
+   committed-rev="102"
+   name="boarddisplay.h"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-05T12:50:44.242707Z"
+   checksum="b6b29bdf57a5f5724a66634be9fb84d1"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:22.000000Z"/>
+<entry
+   committed-rev="110"
+   name="newgame.cpp"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-08T02:09:12.149209Z"
+   checksum="b3314fac73858ccd4c6f112c9d86a304"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:22.000000Z"/>
+<entry
+   committed-rev="125"
+   name="TODO"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-16T02:50:34.981871Z"
+   checksum="31a79cd8bd335d2a0218db5b0847637d"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:22.000000Z"/>
+<entry
+   committed-rev="89"
+   name="movebox.h"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2005-12-30T12:28:02.101166Z"
+   checksum="df8786843f0c4e6442237f57ee613ba2"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:22.000000Z"/>
+<entry
+   committed-rev="124"
+   name="quacker.cpp"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2006-01-10T18:21:47.195930Z"
+   checksum="1277205cca1584308109dd32e916bf56"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:22.000000Z"/>
+<entry
+   committed-rev="89"
+   name="dashboard.h"
+   text-time="2006-01-16T02:58:23.000000Z"
+   committed-date="2005-12-30T12:28:02.101166Z"
+   checksum="9e28093764beb20410adf9d462776430"
+   last-author="jasonkb"
+   kind="file"
+   prop-time="2006-01-16T02:58:22.000000Z"/>
+</wc-entries>

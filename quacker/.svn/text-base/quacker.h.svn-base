@@ -1,0 +1,290 @@
+/*
+ * Copyright (c) 2005-2006 Jason Katz-Brown and John O'Laughlin.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. The names of the authors may not be used to endorse or promote
+ *    products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHORS ``AS IS'' AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#ifndef QUACKER_QUACKER_H
+#define QUACKER_QUACKER_H
+
+#include <QMainWindow>
+
+#include <datamanager.h>
+#include <sim.h>
+
+class QAction;
+class QComboBox;
+class QCheckBox;
+class QGroupBox;
+class QLineEdit;
+class QPushButton;
+class QSplitter;
+class QTabWidget;
+class QTimer;
+
+namespace Quackle
+{
+	class Game;
+	class GamePosition;
+	class History;
+	class HistoryLocation;
+	class Move;
+	class Rack;
+}
+
+class BaseView;
+class HistoryView;
+class View;
+class SimViewer;
+
+enum QuackerMode { Mode_TWL = 0, Mode_SOWPODS, Mode_NASOWPODS };
+
+class QuackerSettings
+{
+public:
+	QuackerSettings();
+
+	void readSettings();
+	void writeSettings();
+
+	QString dictGaddagFilename;
+
+	bool vowelFirst;
+
+	QuackerMode mode;
+};
+
+class TopLevel : public QMainWindow
+{
+Q_OBJECT
+
+public:
+	TopLevel(QWidget *parent = 0);
+	~TopLevel();
+
+	static TopLevel *self();
+
+	void closeEvent(QCloseEvent *closeEvent);
+
+	const QuackerSettings &quackerSettings() { return m_quackerSettings; }
+
+	// make pattern of letters user wants
+	QString arrangeLettersForUser(const QString &word);
+	QString arrangeLettersForUser(const Quackle::Rack &rack);
+
+public slots:
+	void open();
+	void newGame();
+	void loadFile();
+	void writeFile();
+	void generateList();
+
+	void kibitz();
+	void kibitz(int numberOfPlays);
+	void kibitzAll();
+	void simulate(bool startSimulation);
+
+	void print();
+	void about();
+
+	// set up our game object based on a shuffled playerList
+	void initializeGame(const Quackle::PlayerList &players);
+
+	// call timerControl, and tell user about it
+	void pause(bool paused);
+
+protected slots:
+	// final set up of initial data structures
+	// and an example game
+	void finishInitialization();
+
+	// pushes along game (computer players, etc) until it is now
+	// a human's turn and then announces so with below function
+	void advanceGame();
+
+	// update both positional and history views,
+	// then wait for human to make a play
+	void itIsNowHumanTurn();
+
+	// use this to control timer!
+	void timerControl(bool paused);
+
+	// commit candidate play then advance the game
+	void commit();
+
+	void statusMessage(const QString &mesage);
+
+	// set game's candidate to move and update views
+	void setCandidateMove(const Quackle::Move &move);
+	void removeCandidateMoves(const Quackle::MoveList &moves);
+
+	// set current player's rack and update views
+	void setRack(const Quackle::Rack &rack);
+
+	// set history location to view
+	void goToHistoryLocation(const Quackle::HistoryLocation &location);
+
+	// update *positional* views - emit positionChanged
+	void updatePositionViews();
+
+	// updates move views from either simulation results if available
+	// or kibitzed moves
+	void updateMoveViews();
+
+	// update history views when a new position is added
+	void updateHistoryViews();
+
+	void setCaption(const QString &text = QString::null);
+	void setModified(bool modified);
+
+	// main timer
+	void timeout();
+
+	// simulation timer
+	void incrementSimulation();
+	void updateSimViews();
+
+	// simulator settings:
+	void pliesSet(const QString &plyString);
+	void ignoreOpposChanged();
+	void updatePliesCombo();
+	void logfileEnabled(bool on);
+	void logfileChanged();
+	void chooseLogfile();
+	void showSimulationDetails();
+
+signals:
+	// emitted when views (eg board) should update based on the
+	// current position (includes board information, current candidate play
+	// that should be shown)
+	void positionChanged(const Quackle::GamePosition &position);
+
+	void movesChanged(const Quackle::MoveList &moves);
+
+	// emitted when views of history must update
+	void historyChanged(const Quackle::History &history);
+
+protected:
+	void saveSettings();
+	void loadSettings();
+
+	// returns 0 for save, 1 for discard, 2 for cancel
+	int askToSave();
+
+	// returns true if user wants to make play anyway
+	enum IffyPlayType { IffyTiles = 0, IffyWord };
+	bool askToCarryOn(const QString &text, IffyPlayType type);
+
+	// used to know when to update UI when performing heavy calculation
+	bool m_initializationChuu;
+
+	// are dictionaries etc properly set up?
+	bool setupCheck();
+
+	// hook up signals and slots associated with a view
+	void plugIntoBaseMatrix(BaseView *view);
+	void plugIntoMatrix(View *view);
+	void plugIntoPositionMatrix(View *view);
+	void plugIntoMoveMatrix(View *view);
+	void plugIntoHistoryMatrix(HistoryView *view);
+
+	// generic game title
+	QString TopLevel::gameTitle();
+
+	Quackle::DataManager m_dataManager;
+	Quackle::Game *m_game;
+	Quackle::Simulator *m_simulator;
+
+private:
+	static TopLevel *m_self;
+
+	wstring m_firstPlayerName;
+
+	QTimer *m_timer;
+	QTimer *m_simulationTimer;
+
+	View *m_brb;
+
+	QSplitter *m_splitter;
+
+	enum TabIndex { HistoryTabIndex = 0, ChoicesTabIndex = 1 };
+	QTabWidget *m_tabWidget;
+
+	HistoryView *m_history;
+	HistoryView *m_dashboard;
+
+	QWidget *m_choicesWidget;
+	View *m_moveBox;
+
+// encapsulated simulator settings widget
+	QGroupBox *m_simulatorWidget;
+	QPushButton *m_showDetailsButton;
+	QLineEdit *m_logfileEdit;
+	QGroupBox *m_logfileEnable;
+	QPushButton *m_logfileChooser;
+	QCheckBox *m_ignoreOpposCheck;
+
+	static const int m_pliesToOffer = 6;
+	QComboBox *m_pliesCombo;
+
+	SimViewer *m_simViewer;
+
+	void setLogfileEnabled(bool enabled);
+	bool isLogfileEnabled() const;
+
+	// the value of the file-choosing lineedit
+	QString userSpecifiedLogfile() const;
+
+	// what user specified, or empty string if logging disabled
+	QString logfile() const;
+
+	int m_plies;
+// end encapsulation, hah
+
+	QString m_filename;
+	bool m_modified;
+	QString m_ourCaption;
+
+	QuackerSettings m_quackerSettings;
+
+	QAction *m_pauseAction;
+	QAction *m_commitAction;
+	QAction *m_kibitzAction;
+	QAction *m_kibitzAllAction;
+	QAction *m_simulateAction;
+
+	// make sure moves in our simulator match those in current position
+	void ensureUpToDateSimulatorMoveList();
+
+	void createMenu();
+	void createWidgets();
+	void switchToTab(TabIndex index);
+
+	// throw up dialog box telling user no
+	void unimplemented();
+};
+
+#endif

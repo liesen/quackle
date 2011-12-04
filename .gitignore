@@ -1,3 +1,5 @@
+.DS_Store
+.o
 .sconsign
 obj
 Makefile
@@ -8,4 +10,7 @@ object_script.libquackle.Debug
 object_script.libquackle.Release
 release
 ChangeLog
-*.o
+libquackle.a
+quacker/moc
+quacker/quacker.app
+quackleio/libquackleio.a

@@ -16,7 +16,7 @@ release {
 # CONFIG += debug
 
 CONFIG += console
-CONFIG -= x11
+CONFIG -= app_bundle x11
 
 LIBS += -L.. -L../quackleio -lquackle -lquackleio
 
